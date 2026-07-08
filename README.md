@@ -1,9 +1,14 @@
+<div align="center">
+  
 # Uncertainty-Aware Spatio-Semantic Contextual Prompts for Multimodal Medical Segmentation
 
-### Soumitri Chattopadhyay, Basar Demir, Marc Niethammer
-### University of California, San Diego  
+### **MICCAI 2026 _(early accept)_**
 
----
+[Soumitri Chattopadhyay](https://soumitri2001.github.io) · Basar Demir · Marc Niethammer
+
+[UCSD Biomedical Image Analysis Group](https://cseweb.ucsd.edu/~mniethammer/)
+
+</div>
 
 ## Abstract
 
