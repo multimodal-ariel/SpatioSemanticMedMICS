@@ -11,7 +11,7 @@ The vast heterogeneity of medical imaging demands developing universal and modal
 
 ---
 
-## Setup
+### Setup
 
 ```bash
 conda create -n medsam python=3.10 -y
@@ -19,47 +19,49 @@ conda activate medsam
 pip install -r requirements.txt
 ```
 
-Use a **CUDA** build of PyTorch appropriate for your driver (the pinned `requirements.txt` reflects one working environment; you may need to reinstall `torch` from [pytorch.org](https://pytorch.org) if versions clash).
+---
+
+### Data layout
+
+Place datasets under `./data_autoprompt/` (gitignored). Expected layout matches our experiments: per-organ folders with `imagesTr` / `labelsTr`, paired by filename. Follow [SAM-Med3D](https://github.com/uni-medical/SAM-Med3D) for data layout instructions.
 
 ---
 
-## Data layout
+### SAM-Med3D checkpoint
 
-Place datasets under `./data_autoprompt/` (gitignored). Expected layout matches our experiments: per-organ folders with `imagesTr` / `labelsTr`, paired by filename. Follow [SAM-Med3D](https://github.com/uni-medical/SAM-Med3D) for data layout instructions. Symlinking an existing tree is fine.
-
----
-
-## SAM-Med3D checkpoint
-
-1. Download **`sam_med3d_turbo.pth`** from the [SAM-Med3D Hugging Face repo](https://huggingface.co/blueyo0/SAM-Med3D/tree/main) (same file as in the official readme).
+1. Download **`sam_med3d_turbo.pth`** from the [SAM-Med3D Hugging Face repo](https://huggingface.co/blueyo0/SAM-Med3D/tree/main).
 2. Save it as **`checkpoints/sam_med3d_turbo.pth`** (or set **`SAM_MED3D_CHECKPOINT`** to an absolute path).
 
 ---
 
-## Running
+### Running
 
 From the repository root (the directory that contains `main.py`):
 
 ```bash
 python main.py \
-  -qp ./data_autoprompt/BTCV -sp ./data_autoprompt/BTCV \
+  -qp ./data_autoprompt/BTCV \
+  -sp ./data_autoprompt/BTCV \
   -qmod ct -smod ct \
   --save_path ./results_final/intradataset/BTCV/1shot
 ```
 
 Defaults are aligned with our paper runs (e.g. 1-shot, `pairs_per_query=5`, no ICON finetune steps, dense prompts only). Override as needed; see `python main.py --help`.
 
-**Batch jobs (multi-GPU servers):** see `scripts/` — each script `cd`s to the repo root and calls `python main.py ...`. Edit paths or `CUDA_VISIBLE_DEVICES` to match your device.
-
 ---
 
 
-## Acknowledgments
+**Acknowledgments:** The authors express gratitude to all contributors and maintainers of [SAM-Med3D](https://github.com/uni-medical/SAM-Med3D), [MultiGradICON](https://github.com/uncbiag/uniGradICON) and [UniGradICON](https://github.com/uncbiag/uniGradICON) for their open-source codes and models. Please cite their respective papers if you are using our codebase!
 
-| Component | What we use | Where to get it |
-|-----------|-------------|-----------------|
-| **SAM-Med3D** | 3D encoder / decoder (`segment_anything/`), **SAM-Med3D-turbo** weights | Code and training recipe: [uni-medical/SAM-Med3D](https://github.com/uni-medical/SAM-Med3D). Checkpoint: [Hugging Face — `sam_med3d_turbo.pth`](https://huggingface.co/blueyo0/SAM-Med3D/blob/main/sam_med3d_turbo.pth) (see also their [readme checkpoint section](https://github.com/uni-medical/SAM-Med3D#-checkpoint)). |
-| **UniGradICON** | `unigradicon` + `icon_registration` for **UniGradICON** (uni-modal) and **MultigradICON** (cross-modal) networks and pretrained weights | [uncbiag/uniGradICON](https://github.com/uncbiag/uniGradICON) and the [`unigradicon`](https://pypi.org/project/unigradicon/) / [`icon_registration`](https://pypi.org/project/icon-registration/) packages. Weights are loaded by those libraries on first use (see upstream docs). |
+## Citation
+```
+@inproceedings{chattopadhyay2026uncertainty,
+  title = {Uncertainty-Aware Spatio-Semantic Contextual Prompts for Multimodal Medical Segmentation},
+  authors = {Chattopadhyay, Soumitri and Demir, Basar and Niethammer, Marc},
+  booktitle = {MICCAI},
+  year = {2026}
+}
+```
 
 ---
 
