@@ -16,6 +16,12 @@ The vast heterogeneity of medical imaging demands developing universal and modal
 
 ---
 
+<div align="center">
+  <img src="miccai26.png" alt="Pipeline overview" width="1200">
+</div>
+
+---
+
 ### Setup
 
 ```bash
